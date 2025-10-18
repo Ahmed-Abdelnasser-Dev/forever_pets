@@ -16,6 +16,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       backgroundColor: Colors.transparent,
       elevation: 0,
       leading: GestureDetector(
+        key: const Key('back_button'),
         onTap: onBackPressed ?? () => Navigator.pop(context),
         child: Padding(
           padding: EdgeInsets.all(12.w),
@@ -32,6 +33,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       ),
       actions: [
         GestureDetector(
+          key: const Key('like_button'),
           onTap: onLikePressed,
           child: Padding(
             padding: EdgeInsets.all(12.w),

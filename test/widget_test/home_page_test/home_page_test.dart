@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:forever_pets/features/home/presentation/pages/home_page.dart';
+import 'package:forever_pets/core/widgets/categories_selector.dart';
+import 'package:forever_pets/features/home/presentation/widgets/custom_search_bar.dart';
 
 Future<void> pumpWithScreenUtil(WidgetTester tester, Widget widget) async {
   await tester.pumpWidget(
@@ -22,21 +24,15 @@ void main() {
       // Title check
       expect(find.text('Find Your Forever Pet'), findsOneWidget);
 
-      // Check ListViews by scroll direction
-      final horizontalListView = find.byWidgetPredicate(
-        (widget) =>
-            widget is ListView && widget.scrollDirection == Axis.horizontal,
-      );
-      final verticalListView = find.byWidgetPredicate(
-        (widget) =>
-            widget is ListView && widget.scrollDirection == Axis.vertical,
-      );
+      // CustomScrollView exists
+      expect(find.byType(CustomScrollView), findsOneWidget);
 
+      // Horizontal List inside CategoriesSelector
+      final horizontalListView = find.descendant(
+        of: find.byType(CategoriesSelector),
+        matching: find.byType(ListView),
+      );
       expect(horizontalListView, findsOneWidget);
-      expect(verticalListView, findsOneWidget);
-
-      // Scrollable parent check
-      expect(find.byType(SingleChildScrollView), findsOneWidget);
     });
 
     testWidgets('contains search bar and categories section', (
@@ -45,15 +41,15 @@ void main() {
       await pumpWithScreenUtil(tester, const HomePage());
 
       // Search bar
-      expect(find.byType(TextField), findsOneWidget);
+      expect(find.byType(CustomSearchBar), findsOneWidget);
 
       // Categories section title
       expect(find.text('Categories'), findsOneWidget);
 
-      // Optional: confirm horizontal category list exists
-      final horizontalListView = find.byWidgetPredicate(
-        (widget) =>
-            widget is ListView && widget.scrollDirection == Axis.horizontal,
+      // Horizontal categories list exists
+      final horizontalListView = find.descendant(
+        of: find.byType(CategoriesSelector),
+        matching: find.byType(ListView),
       );
       expect(horizontalListView, findsOneWidget);
     });
@@ -61,14 +57,13 @@ void main() {
     testWidgets('scrolls content properly', (WidgetTester tester) async {
       await pumpWithScreenUtil(tester, const HomePage());
 
-      final scrollable = find.byType(SingleChildScrollView);
+      final scrollable = find.byType(CustomScrollView);
       expect(scrollable, findsOneWidget);
 
-      // Try scrolling to ensure it’s not static
+      // Drag to simulate scroll
       await tester.drag(scrollable, const Offset(0, -200));
       await tester.pump();
 
-      // No exceptions means scroll works fine
       expect(tester.takeException(), isNull);
     });
   });

@@ -102,12 +102,12 @@ class DetailsPage extends StatelessWidget {
 
                 //? Info Cards
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     InfoBox(title: 'Female', subtitle: 'Gender'),
-                    SizedBox(width: 12.w),
+                    SizedBox(width: Spacing.horizontalSpace),
                     InfoBox(title: '2 Years', subtitle: 'Age'),
-                    SizedBox(width: 12.w),
+                    SizedBox(width: Spacing.horizontalSpace),
                     InfoBox(title: '15 Kg', subtitle: 'Weight'),
                   ],
                 ),
