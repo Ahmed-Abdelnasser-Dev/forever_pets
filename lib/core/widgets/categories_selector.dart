@@ -4,22 +4,14 @@ import 'package:forever_pets/core/theme/colors.dart';
 import 'package:forever_pets/core/theme/text.dart';
 
 class CategoriesSelector extends StatefulWidget {
-  const CategoriesSelector({super.key});
+  final List<String> categories;
+  const CategoriesSelector({super.key, required this.categories});
 
   @override
   State<CategoriesSelector> createState() => _CategoriesSelectorState();
 }
 
 class _CategoriesSelectorState extends State<CategoriesSelector> {
-  final List<String> categories = [
-    'All',
-    'Cats',
-    'Dogs',
-    'Birds',
-    'Fish',
-    'Reptiles',
-  ];
-
   int selectedIndex = 0;
 
   @override
@@ -28,7 +20,7 @@ class _CategoriesSelectorState extends State<CategoriesSelector> {
       height: 40.h,
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
-        itemCount: categories.length,
+        itemCount: widget.categories.length,
         separatorBuilder: (context, index) => SizedBox(width: 8.w),
         itemBuilder: (context, index) {
           final bool isSelected = selectedIndex == index;
@@ -48,7 +40,7 @@ class _CategoriesSelectorState extends State<CategoriesSelector> {
               ),
               child: Center(
                 child: Text(
-                  categories[index],
+                  widget.categories[index],
                   style: TextManager.poppins14SemiBold.copyWith(
                     color: isSelected
                         ? ColorManger.white
