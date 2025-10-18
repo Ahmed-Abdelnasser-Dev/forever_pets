@@ -21,6 +21,7 @@ void main() {
     await pumpWithScreenUtil(
       tester,
       const AnimalCard(
+        key: Key('AnimalCard'),
         imageUrl: 'assets/images/boarding.png',
         name: 'Maggie',
         gender: 'Female',
@@ -43,6 +44,7 @@ void main() {
     await pumpWithScreenUtil(
       tester,
       AnimalCard(
+        key: const Key('AnimalCard'),
         imageUrl: 'assets/images/boarding.png',
         name: 'Maggie',
         gender: 'Female',

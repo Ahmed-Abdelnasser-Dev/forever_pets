@@ -19,7 +19,12 @@ void main() {
   testWidgets('CategoriesSelector shows all categories', (
     WidgetTester tester,
   ) async {
-    await pumpWithScreenUtil(tester, const CategoriesSelector());
+    await pumpWithScreenUtil(
+      tester,
+      const CategoriesSelector(
+        categories: ['All', 'Cats', 'Dogs', 'Birds', 'Fish', 'Reptiles'],
+      ),
+    );
 
     expect(find.text('All'), findsOneWidget);
     expect(find.text('Cats'), findsOneWidget);
@@ -27,7 +32,12 @@ void main() {
   });
 
   testWidgets('Selecting category updates UI', (WidgetTester tester) async {
-    await pumpWithScreenUtil(tester, const CategoriesSelector());
+    await pumpWithScreenUtil(
+      tester,
+      const CategoriesSelector(
+        categories: ['All', 'Cats', 'Dogs', 'Birds', 'Fish', 'Reptiles'],
+      ),
+    );
 
     final first = find.text('All');
     final second = find.text('Cats');

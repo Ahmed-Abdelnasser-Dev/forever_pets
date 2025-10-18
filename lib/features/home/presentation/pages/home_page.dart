@@ -65,7 +65,16 @@ class HomePage extends StatelessWidget {
                     ),
                   ),
                   SizedBox(height: 14.h),
-                  const CategoriesSelector(),
+                  const CategoriesSelector(
+                    categories: [
+                      'All',
+                      'Cats',
+                      'Dogs',
+                      'Birds',
+                      'Fish',
+                      'Reptiles',
+                    ],
+                  ),
                 ]),
               ),
             ),

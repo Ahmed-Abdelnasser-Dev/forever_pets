@@ -11,8 +11,8 @@ class AnimalCard extends StatefulWidget {
   final String gender;
   final String age;
   final String distance;
-  final VoidCallback onTap;
-  final String heroTag;
+  final VoidCallback? onTap;
+  final String? heroTag;
 
   const AnimalCard({
     super.key,
@@ -21,8 +21,8 @@ class AnimalCard extends StatefulWidget {
     required this.gender,
     required this.age,
     required this.distance,
-    required this.onTap,
-    required this.heroTag,
+    this.onTap,
+    this.heroTag,
   });
 
   @override
@@ -43,7 +43,7 @@ class _AnimalCardState extends State<AnimalCard> {
           borderRadius: BorderRadius.circular(8.r),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.05),
+              color: Colors.black.withAlpha((0.05 * 255).round()),
               blurRadius: 4.r,
               offset: Offset(0, .5.h),
             ),
@@ -53,7 +53,7 @@ class _AnimalCardState extends State<AnimalCard> {
           children: [
             //? Image + Hero
             Hero(
-              tag: widget.heroTag,
+              tag: widget.heroTag ?? '',
               child: Container(
                 height: 112.h,
                 width: 112.w,
