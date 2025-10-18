@@ -9,7 +9,7 @@ void main() {
   Widget createBoardingPage({RouteFactory? onGenerateRoute}) {
     return ScreenUtilInit(
       designSize: const Size(375, 812),
-      builder: (_, __) => MaterialApp(
+      builder: (_, _) => MaterialApp(
         home: const BoardingPage(),
         onGenerateRoute: onGenerateRoute,
       ),

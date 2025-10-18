@@ -56,6 +56,7 @@ class BoardingPage extends StatelessWidget {
                 final sharedPrefs = await SharedPreferences.getInstance();
 
                 sharedPrefs.setBool('isFirstTime', false);
+                if (!context.mounted) return;
                 context.pushReplacementNamed(Routes.home);
               },
 
