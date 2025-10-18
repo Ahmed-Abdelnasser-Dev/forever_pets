@@ -22,4 +22,6 @@ abstract class Media {
   static const String chatFilled = '${icons}chat_filled.svg';
   static const String profile = '${icons}profile.svg';
   static const String profileFilled = '${icons}profile_filled.svg';
+  //? -------- App Bar Icons --------
+  static const String back = '${icons}back.svg';
 }

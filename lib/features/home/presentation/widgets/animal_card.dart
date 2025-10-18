@@ -5,13 +5,14 @@ import 'package:forever_pets/core/constants/media_constants.dart';
 import 'package:forever_pets/core/theme/colors.dart';
 import 'package:forever_pets/core/theme/text.dart';
 
-class AnimalCard extends StatelessWidget {
+class AnimalCard extends StatefulWidget {
   final String imageUrl;
   final String name;
   final String gender;
   final String age;
   final String distance;
-  final VoidCallback? onTap;
+  final VoidCallback onTap;
+  final String heroTag;
 
   const AnimalCard({
     super.key,
@@ -20,13 +21,21 @@ class AnimalCard extends StatelessWidget {
     required this.gender,
     required this.age,
     required this.distance,
-    this.onTap,
+    required this.onTap,
+    required this.heroTag,
   });
+
+  @override
+  State<AnimalCard> createState() => _AnimalCardState();
+}
+
+class _AnimalCardState extends State<AnimalCard> {
+  bool isLiked = false;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onTap,
+      onTap: widget.onTap,
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 6.h),
         decoration: BoxDecoration(
@@ -34,69 +43,59 @@ class AnimalCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(8.r),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withAlpha((0.05 * 255).round()),
+              color: Colors.black.withOpacity(0.05),
               blurRadius: 4.r,
               offset: Offset(0, .5.h),
             ),
           ],
         ),
         child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            //? Image Section
-            Container(
-              height: 112.h,
-              width: 112.w,
-              decoration: BoxDecoration(
-                color: ColorManger.cardColor,
-                borderRadius: BorderRadius.all(Radius.circular(8.r)),
-                image: DecorationImage(
-                  image: AssetImage(imageUrl),
-                  fit: BoxFit.cover,
+            //? Image + Hero
+            Hero(
+              tag: widget.heroTag,
+              child: Container(
+                height: 112.h,
+                width: 112.w,
+                decoration: BoxDecoration(
+                  color: ColorManger.cardColor,
+                  borderRadius: BorderRadius.circular(8.r),
+                  image: DecorationImage(
+                    image: AssetImage(widget.imageUrl),
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
             ),
-
             SizedBox(width: 16.w),
 
-            //? Info Section
+            //? Info
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  //? Name
                   Text(
-                    name,
+                    widget.name,
                     style: TextManager.poppins18Bold.copyWith(
                       color: ColorManger.black,
                     ),
                   ),
                   SizedBox(height: 4.h),
-
-                  //? Gender
                   Text(
-                    gender,
+                    widget.gender,
                     style: TextManager.poppins14Regular.copyWith(
                       color: ColorManger.darkGray,
                     ),
                   ),
                   SizedBox(height: 2.h),
-
-                  //? Age
                   Text(
-                    age,
+                    widget.age,
                     style: TextManager.poppins14Regular.copyWith(
                       color: ColorManger.darkGray,
                     ),
                   ),
                   SizedBox(height: 10.h),
-
-                  //? Distance
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       SvgPicture.asset(
                         Media.location,
@@ -109,7 +108,7 @@ class AnimalCard extends StatelessWidget {
                       ),
                       SizedBox(width: 8.w),
                       Text(
-                        distance,
+                        widget.distance,
                         style: TextManager.poppins14Regular.copyWith(
                           color: ColorManger.darkGray,
                         ),
@@ -119,24 +118,29 @@ class AnimalCard extends StatelessWidget {
                 ],
               ),
             ),
-            SizedBox(width: 8.w),
 
-            //? Like Button
+            //? Heart Button
             SizedBox(
               height: 112.h,
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  SvgPicture.asset(
-                    Media.heart,
-                    width: 24.w,
-                    height: 24.h,
-                    colorFilter: const ColorFilter.mode(
-                      ColorManger.primaryColor,
-                      BlendMode.srcIn,
+                  GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        isLiked = !isLiked;
+                      });
+                    },
+                    child: SvgPicture.asset(
+                      isLiked ? Media.heartFilled : Media.heart,
+                      width: 24.w,
+                      height: 24.h,
+                      colorFilter: ColorFilter.mode(
+                        ColorManger.primaryColor,
+                        BlendMode.srcIn,
+                      ),
                     ),
                   ),
-                  const Spacer(),
+                  Spacer(),
                 ],
               ),
             ),

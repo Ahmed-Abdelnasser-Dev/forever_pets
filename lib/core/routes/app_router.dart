@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:forever_pets/core/routes/routes.dart';
 import 'package:forever_pets/features/boarding/presentation/pages/boarding_page.dart';
+import 'package:forever_pets/features/details/presentation/pages/details_page.dart';
 import 'package:forever_pets/features/home/presentation/pages/home_page.dart';
 
 class AppRouter {
@@ -12,6 +13,16 @@ class AppRouter {
 
       case Routes.boarding:
         return MaterialPageRoute(builder: (_) => const BoardingPage());
+
+      case Routes.details:
+        final args = settings.arguments as Map<String, dynamic>?;
+
+        // Extract heroTag if provided
+        final heroTag = args != null && args.containsKey('heroTag')
+            ? args['heroTag'] as String
+            : 'default_hero';
+
+        return MaterialPageRoute(builder: (_) => DetailsPage(heroTag: heroTag));
 
       default:
         return MaterialPageRoute(
